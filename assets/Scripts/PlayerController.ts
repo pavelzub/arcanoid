@@ -47,11 +47,11 @@ export class PlayerController extends Component {
     speed = 0;
     isTouched = false;
     touchPos = new Vec2(0, 0);
-    controls: Record<KeyCode, boolean>;
+    controls: Record<number, boolean> = {};
 
-    isUpPressed() { return this.controls[KeyCode.ARROW_UP]; }
-    isDownPressed() { return this.controls[KeyCode.ARROW_DOWN]; }
-    isGoPressed() { return this.controls[KeyCode.ARROW_RIGHT]; }
+    isUpPressed(): Boolean { return Boolean(this.controls[KeyCode.ARROW_UP]); }
+    isDownPressed(): Boolean { return Boolean(this.controls[KeyCode.ARROW_DOWN]); }
+    isGoPressed(): Boolean { return Boolean(this.controls[KeyCode.ARROW_RIGHT]); }
 
     initTouches() {
         input.on(Input.EventType.KEY_DOWN, this.onKeyDown, this);
@@ -166,13 +166,13 @@ export class PlayerController extends Component {
             return;
         }
 
-        if (this.isDownPressed) {
+        if (this.isDownPressed()) {
             this.direction.rotate(-Math.PI / 180 * this.rotationStep);
         }
-        if (this.isUpPressed) {
+        if (this.isUpPressed()) {
             this.direction.rotate(Math.PI / 180 * this.rotationStep);
         }
-        if (this.isGoPressed) {
+        if (this.isGoPressed()) {
             this.speed = Math.min(this.speed + this.speedStep, this.maxSpeed);
         }
         
